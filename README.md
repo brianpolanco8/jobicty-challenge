@@ -1,4 +1,4 @@
-# Jobcity TV Maze Challenge
+# Jobsity TV Maze Challenge
 
 TV Shows Challenge
 
