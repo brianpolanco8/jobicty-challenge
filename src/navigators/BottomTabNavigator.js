@@ -3,15 +3,16 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Home, Search } from "../screens";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import { BLACK, DARKGREEN, YELLOW } from "../utils/colors";
+import ShowStackNavigator from "./ShowStackNavigator";
+import PeopleStackNavigator from "./PeopleStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Search"
+      initialRouteName="Home"
       screenOptions={{
-        // tabBarActiveBackgroundColor: "yellow",
         tabBarActiveTintColor: YELLOW,
         tabBarStyle: {
           backgroundColor: BLACK,
@@ -32,10 +33,19 @@ const BottomTabNavigator = () => {
       />
       <Tab.Screen
         name="Search"
-        component={Search}
+        component={ShowStackNavigator}
         options={{
           tabBarIcon: ({ color, focused, size }) => (
             <AntIcon name="search1" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="People"
+        component={PeopleStackNavigator}
+        options={{
+          tabBarIcon: ({ color, focused, size }) => (
+            <AntIcon name="user" color={color} size={size} />
           ),
         }}
       />

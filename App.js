@@ -15,8 +15,9 @@ import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import BottomTabNavigator from "./src/navigators/BottomTabNavigator";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, Search } from "./src/screens";
+import { Home, ShowSearch } from "./src/screens";
 import { BLACK } from "./src/utils/colors";
+import HomeStackNavigator from "./src/navigators/HomeStackNavigator";
 
 const height = Dimensions.get("window").height;
 
@@ -29,7 +30,7 @@ export default function App() {
         <Provider store={store}>
           <SafeAreaView style={{ flex: 1, backgroundColor: BLACK }}>
             <StatusBar barStyle="light-content" />
-            <BottomTabNavigator />
+            <HomeStackNavigator />
           </SafeAreaView>
         </Provider>
       </NavigationContainer>

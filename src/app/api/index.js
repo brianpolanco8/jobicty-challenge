@@ -20,5 +20,16 @@ export const api = {
     getShowEpisodes: async (id) => {
       return await apiInstance.get(`shows/${id}/episodes`);
     },
+    getShowSeasons: async (id) => {
+      return await apiInstance.get(`shows/${id}/seasons`);
+    },
+  },
+  people: {
+    searchPeople: async (query) => {
+      return await apiInstance.get(`search/people?q=${query}`);
+    },
+    peopleDetail: async (id) => {
+      return await apiInstance.get(`people/${id}`);
+    },
   },
 };

@@ -5,12 +5,20 @@ export const removeHTMLTags = (description) => {
 };
 
 // make request
-export const fetch = async (callback, setter, params) => {
+export const fetch = async (callback, setter, params, setIsLoading) => {
   try {
+    if (setIsLoading) {
+      setIsLoading(true);
+    }
     let { data } = await callback(params);
-    data = Array.isArray(data) ? data : data.data;
+    data = Array.isArray(data) ? data : data;
     setter(data);
+    if (setIsLoading) {
+      setIsLoading(false);
+    }
   } catch (err) {
-    console.log(err);
+    if (setIsLoading) {
+      setIsLoading(false);
+    }
   }
 };
