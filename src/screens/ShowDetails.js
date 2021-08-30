@@ -118,15 +118,15 @@ const ShowDetailsScreen = ({ route }) => {
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
-          title="Didn't got to finish this. Sorry!!!"
-          message="😔!"
+          title="Sorry! "
+          message="I was unable to finish this."
           closeOnTouchOutside={true}
           onDismiss={() => setShowAlert(false)}
           closeOnHardwareBackPress={false}
           showCancelButton={true}
           showConfirmButton={true}
           cancelText="Cancel"
-          confirmText="Yes"
+          confirmText="Ok"
           confirmButtonColor={YELLOW}
           onCancelPressed={() => {
             setShowAlert(false);
