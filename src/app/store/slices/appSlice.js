@@ -24,7 +24,6 @@ const reducers = {
     state.favShows = [...state.favShows, { ...action.payload }];
   },
   removeFromFavShows: (state, action) => {
-    //TODO: Finish this method
     state.favShows = [
       ...state.favShows.filter((show) => show.id !== action.payload.id),
     ];
