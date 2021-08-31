@@ -15,7 +15,12 @@ export const useAuthentication = () => {
   const { isAuth, pinCode } = useSelector(selectState);
 
   useEffect(() => {
-    if (!isAuth) navigation.navigate("LockScreen");
+    if (!isAuth) {
+      navigation.navigate("LockScreen");
+    } else {
+      console.log("else");
+      navigation.navigate("BottomTabNavigator");
+    }
     // eslint-disable-next-line
   }, []);
 };

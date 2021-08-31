@@ -23,14 +23,6 @@ const FavoriteShowResult = ({ item }) => {
   const dispatch = useDispatch();
   const [showAlert, setShowAlert] = useState(false);
 
-  const removeFromFavs = (show) => {
-    setAlertMessage({
-      title: "Oh oh!",
-      message: "Are you sure you want to delete this from your favorites?",
-    });
-    setShowAlert(true);
-  };
-
   return (
     <TouchableOpacity
       onPress={() =>

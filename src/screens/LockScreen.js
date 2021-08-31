@@ -14,10 +14,12 @@ import {
 import { BLACK, WHITE, YELLOW } from "../utils/colors";
 import * as LocalAuthentication from "expo-local-authentication";
 import { useAuthentication } from "../hooks";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 const { height } = Dimensions.get("window");
 
 const LockScreen = () => {
+  const [showAlert, setShowAlert] = useState(false);
   const navigation = useNavigation();
   const { isAuth, pinCode, pinCodeSet } = useSelector(selectState);
   const dispatch = useDispatch();
@@ -30,11 +32,12 @@ const LockScreen = () => {
       dispatch(setPinCode(val));
       dispatch(setPinCodeSet(true));
       navigation.navigate("BottomTabNavigator");
-    } else {
-      if (val === pinCode) navigation.navigate("BottomTabNavigator");
+    } else if (val === pinCode) {
+      navigation.navigate("BottomTabNavigator");
+    } else if (val !== pinCode) {
+      setShowAlert(true);
+      clear();
     }
-
-    // navigation.navigate("BottomTabNavigator");
   };
 
   const handleBiometricsStored = async () => {
@@ -65,7 +68,9 @@ const LockScreen = () => {
       await handleBiometricsStored();
       await handleBiometricAuth();
     })();
-  });
+  }, []);
+
+  useAuthentication();
 
   return (
     <View
@@ -113,6 +118,22 @@ const LockScreen = () => {
       </Text>
 
       {faceIdWorking && <Text style={{ color: WHITE }}>Authenticated</Text>}
+
+      <AwesomeAlert
+        show={showAlert}
+        showProgress={false}
+        title={"Oh oh!"}
+        message={"Wrong Pin"}
+        closeOnTouchOutside={true}
+        onDismiss={() => setShowAlert(false)}
+        closeOnHardwareBackPress={false}
+        showConfirmButton={true}
+        confirmText="Ok"
+        confirmButtonColor={YELLOW}
+        onConfirmPressed={() => {
+          setShowAlert(false);
+        }}
+      />
     </View>
   );
 };

@@ -17,15 +17,13 @@ const Home = () => {
   const [shows, setShows] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  const onChange = (value) => setSearch(value);
-
   useEffect(() => {
     fetch(api.search.shows, setShows, "girls", setIsLoading).then((result) =>
       setIsLoading(false)
     );
   }, []);
 
-  // useAuthentication();
+  useAuthentication();
 
   return (
     <View style={styles.container}>
