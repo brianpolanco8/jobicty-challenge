@@ -1,9 +1,24 @@
 import { configureStore } from "@reduxjs/toolkit";
-import appReducer from "./slices/appSlice";
+import persistedAppReducer from "./slices/appSlice";
+import {
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from "redux-persist";
 
 const store = configureStore({
   reducer: {
-    app: appReducer,
+    app: persistedAppReducer,
+  },
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    });
   },
   devTools: true,
 });

@@ -13,6 +13,7 @@ import {
 } from "../app/store/slices/appSlice";
 import { BLACK, WHITE, YELLOW } from "../utils/colors";
 import * as LocalAuthentication from "expo-local-authentication";
+import { useAuthentication } from "../hooks";
 
 const { height } = Dimensions.get("window");
 
@@ -24,9 +25,16 @@ const LockScreen = () => {
   const [faceIdWorking, setFaceIdWorking] = React.useState(false);
 
   const onComplete = (val, clear) => {
-    dispatch(setAuth(true));
-    dispatch(setPinCode(val));
-    navigation.navigate("BottomTabNavigator");
+    if (!pinCodeSet) {
+      dispatch(setAuth(true));
+      dispatch(setPinCode(val));
+      dispatch(setPinCodeSet(true));
+      navigation.navigate("BottomTabNavigator");
+    } else {
+      if (val === pinCode) navigation.navigate("BottomTabNavigator");
+    }
+
+    // navigation.navigate("BottomTabNavigator");
   };
 
   const handleBiometricsStored = async () => {
@@ -58,6 +66,7 @@ const LockScreen = () => {
       await handleBiometricAuth();
     })();
   });
+
   return (
     <View
       style={{
@@ -84,7 +93,9 @@ const LockScreen = () => {
             textAlign: "center",
           }}
         >
-          Please enter a pin for your APP
+          {!pinCodeSet
+            ? "Please enter a pin for your APP"
+            : "Please enter your pin"}
         </Text>
       </View>
       <PinView

@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const initialState = {
   isAuth: false,
@@ -46,4 +48,11 @@ export const {
   removeFromFavShows,
 } = appSlice.actions;
 
-export default appSlice.reducer;
+const persistConfig = {
+  key: "app",
+  storage: AsyncStorage,
+};
+
+const persistedReducer = persistReducer(persistConfig, appSlice.reducer);
+
+export default persistedReducer;

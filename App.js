@@ -19,19 +19,22 @@ import { Home, ShowSearch } from "./src/screens";
 import { BLACK } from "./src/utils/colors";
 import HomeStackNavigator from "./src/navigators/HomeStackNavigator";
 
-const height = Dimensions.get("window").height;
+import { PersistGate } from "redux-persist/integration/react";
+import { persistStore } from "redux-persist";
 
-const Tab = createBottomTabNavigator();
+let persistor = persistStore(store);
 
 export default function App() {
   return (
     <SafeAreaProvider>
       <NavigationContainer>
         <Provider store={store}>
-          <SafeAreaView style={{ flex: 1, backgroundColor: BLACK }}>
-            <StatusBar barStyle="light-content" />
-            <HomeStackNavigator />
-          </SafeAreaView>
+          <PersistGate loading={null} persistor={persistor}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: BLACK }}>
+              <StatusBar barStyle="light-content" />
+              <HomeStackNavigator />
+            </SafeAreaView>
+          </PersistGate>
         </Provider>
       </NavigationContainer>
     </SafeAreaProvider>

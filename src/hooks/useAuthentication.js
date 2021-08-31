@@ -10,13 +10,12 @@ import { selectState } from "../app/store/slices/appSlice";
  * @param   {Array}  values values to verify
  * @param   {String} path path to redirect if fail
  */
-export const useAuthentication = (values, path) => {
+export const useAuthentication = () => {
   const navigation = useNavigation();
-  const { isAuth } = useSelector(selectState);
+  const { isAuth, pinCode } = useSelector(selectState);
 
   useEffect(() => {
     if (!isAuth) navigation.navigate("LockScreen");
-
     // eslint-disable-next-line
   }, []);
 };

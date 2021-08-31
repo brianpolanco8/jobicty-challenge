@@ -10,7 +10,7 @@ const HomeStackNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="BottomTabNavigator"
+      initialRouteName="LockScreen"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="LockScreen" component={LockScreen} />
