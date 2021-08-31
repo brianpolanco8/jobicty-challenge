@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
-import { GenresList } from "../components";
+import { GenresList } from "../../components";
 import {
   BLACK,
   WHITE,
   WHITE_FOR_BORDERS,
   WHITE_FOR_TEXT,
   YELLOW,
-} from "../utils/colors";
-import { removeHTMLTags } from "../utils/helpers";
+} from "../../utils/colors";
+import { removeHTMLTags } from "../../utils/helpers";
 
 // DIMENSIONS
 const { width, height } = Dimensions.get("window");

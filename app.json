@@ -17,7 +17,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "This app will optionally use Face ID or Touch ID to save login"
+      },
+      "bundleIdentifier": "com.brianpolanco8.tvmazechallenge"
     },
     "android": {
       "adaptiveIcon": {

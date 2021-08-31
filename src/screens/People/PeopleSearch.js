@@ -10,8 +10,7 @@ import {
 } from "react-native";
 import { api } from "../../app/api";
 import { SearchBar } from "../../components";
-import { BLACK, DARKGREEN, GRAY, WHITE } from "../../utils/colors";
-import debounce from "lodash.debounce";
+import { BLACK, WHITE } from "../../utils/colors";
 import axios from "axios";
 import { fetch } from "../../utils/helpers";
 import PeopleSearchResult from "../../components/PeopleSearchResult";

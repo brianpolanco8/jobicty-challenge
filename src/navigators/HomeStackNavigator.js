@@ -7,13 +7,14 @@ import BottomTabNavigator from "./BottomTabNavigator";
 
 const HomeStackNavigator = () => {
   const Stack = createStackNavigator();
+
   return (
     <Stack.Navigator
-      initialRouteName="LockScreen"
+      initialRouteName="BottomTabNavigator"
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="LockScreen" component={LockScreen} />
-      <Stack.Screen name="Home" component={BottomTabNavigator} />
+      <Stack.Screen name="BottomTabNavigator" component={BottomTabNavigator} />
       <Stack.Screen
         name="ShowDetails"
         component={ShowDetails}

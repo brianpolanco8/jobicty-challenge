@@ -1,3 +1,4 @@
+import R from "ramda";
 export const removeHTMLTags = (description) => {
   const regex = /(<([^>]+)>)/gi;
 
@@ -22,3 +23,5 @@ export const fetch = async (callback, setter, params, setIsLoading) => {
     }
   }
 };
+
+export const sortFavsAlphabetically = R.sortBy(R.prop("name"));

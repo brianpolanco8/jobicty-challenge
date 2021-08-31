@@ -8,13 +8,12 @@ import {
   Dimensions,
   ActivityIndicator,
 } from "react-native";
-import { api } from "../app/api";
-import { SearchBar } from "../components";
-import { BLACK, DARKGREEN, GRAY, WHITE } from "../utils/colors";
-import debounce from "lodash.debounce";
-import SearchResult from "../components/SearchResult";
+import { api } from "../../app/api";
+import { SearchBar } from "../../components";
+import { BLACK, WHITE } from "../../utils/colors";
+import SearchResult from "../../components/SearchResult";
 import axios from "axios";
-import { fetch } from "../utils/helpers";
+import { fetch } from "../../utils/helpers";
 
 const Search = () => {
   const [search, setSearch] = useState("");

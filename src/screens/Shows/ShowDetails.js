@@ -11,24 +11,50 @@ import { useNavigation } from "@react-navigation/native";
 import { Button } from "react-native-elements";
 import AntIcon from "react-native-vector-icons/AntDesign";
 import AwesomeAlert from "react-native-awesome-alerts";
+import { includes } from "ramda";
 
-import { BLACK, WHITE, YELLOW } from "../utils/colors";
-import { fetch, removeHTMLTags } from "../utils/helpers";
-import { api } from "../app/api";
-import { Episodes, GenresList } from "../components";
+import { BLACK, WHITE, WHITE_FOR_TEXT, YELLOW } from "../../utils/colors";
+import { fetch, removeHTMLTags } from "../../utils/helpers";
+import { api } from "../../app/api";
+import { Episodes, GenresList } from "../../components";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectState,
+  setFavShows,
+  removeFromFavShows,
+} from "../../app/store/slices/appSlice";
 
-const notFoundImage = require("../../assets/notFound.jpg");
+const notFoundImage = require("../../../assets/notFound.jpg");
 
 // DIMENSIONS
 const { width, height } = Dimensions.get("window");
 
 const ShowDetailsScreen = ({ route }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
+  const { favShows } = useSelector(selectState);
   const [showDetails, setShowDetails] = useState({});
   const [showEpisodes, setShowEpisodes] = useState([]);
   const [showSeasons, setShowSeasons] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState({});
+
+  const addToFavorites = (show) => {
+    dispatch(setFavShows(show));
+  };
+
+  const removeFromFavs = (show) => {
+    setAlertMessage({
+      title: "Oh oh!",
+      message: "Are you sure you want to delete this from your favorites?",
+    });
+    setShowAlert(true);
+  };
+
+  const isInFavs = includes(showDetails, favShows);
+
+  console.log("isInFav", isInFavs);
 
   useEffect(() => {
     setIsLoading(true);
@@ -80,21 +106,28 @@ const ShowDetailsScreen = ({ route }) => {
             </Text>
           </View>
         </View>
-        {/* Favorites */}
+
+        {/* Favorites Button*/}
         <Button
-          title="Add to favorites"
+          title={isInFavs ? "Added to favorites" : "Add to favorites"}
           style={styles.button}
-          buttonStyle={{ backgroundColor: YELLOW }}
+          buttonStyle={
+            isInFavs
+              ? { backgroundColor: WHITE_FOR_TEXT }
+              : { backgroundColor: YELLOW }
+          }
           titleStyle={{ color: BLACK }}
           icon={
             <AntIcon
               style={{ marginHorizontal: 5 }}
-              name="star"
+              name={isInFavs ? "check" : "star"}
               size={20}
               color={BLACK}
             />
           }
-          onPress={() => setShowAlert(true)}
+          onPress={() =>
+            isInFavs ? removeFromFavs(showDetails) : addToFavorites(showDetails)
+          }
         />
         {/* RATING */}
         <View style={styles.ratingContainer}>
@@ -114,25 +147,24 @@ const ShowDetailsScreen = ({ route }) => {
           <Episodes episodes={showEpisodes} seasons={showSeasons} />
         )}
 
-        {/* </View> */}
         <AwesomeAlert
           show={showAlert}
           showProgress={false}
-          title="Sorry! "
-          message="I was unable to finish this."
+          title={alertMessage?.title}
+          message={alertMessage?.message}
           closeOnTouchOutside={true}
           onDismiss={() => setShowAlert(false)}
           closeOnHardwareBackPress={false}
-          showCancelButton={true}
+          showCancelButton={isInFavs ? true : false}
           showConfirmButton={true}
-          cancelText="Cancel"
-          confirmText="Ok"
+          confirmText="Yes"
           confirmButtonColor={YELLOW}
           onCancelPressed={() => {
             setShowAlert(false);
           }}
           onConfirmPressed={() => {
             setShowAlert(false);
+            dispatch(removeFromFavShows(showDetails));
           }}
         />
       </View>

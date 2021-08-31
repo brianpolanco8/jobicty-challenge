@@ -5,6 +5,7 @@ import AntIcon from "react-native-vector-icons/AntDesign";
 import { BLACK, DARKGREEN, YELLOW } from "../utils/colors";
 import ShowStackNavigator from "./ShowStackNavigator";
 import PeopleStackNavigator from "./PeopleStackNavigator";
+import FavoritesStackNavigator from "./FavoritesStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
@@ -46,6 +47,15 @@ const BottomTabNavigator = () => {
         options={{
           tabBarIcon: ({ color, focused, size }) => (
             <AntIcon name="user" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Favorites"
+        component={FavoritesStackNavigator}
+        options={{
+          tabBarIcon: ({ color, focused, size }) => (
+            <AntIcon name="hearto" color={color} size={size} />
           ),
         }}
       />

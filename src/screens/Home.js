@@ -25,7 +25,7 @@ const Home = () => {
     );
   }, []);
 
-  useAuthentication();
+  // useAuthentication();
 
   return (
     <View style={styles.container}>
