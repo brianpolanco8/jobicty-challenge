@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Alert, Dimensions } from "react-native";
+import { Alert, TouchableOpacity } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import PinView from "react-native-pin-view";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,10 +13,9 @@ import {
 } from "../app/store/slices/appSlice";
 import { BLACK, WHITE, YELLOW } from "../utils/colors";
 import * as LocalAuthentication from "expo-local-authentication";
-import { useAuthentication } from "../hooks";
 import AwesomeAlert from "react-native-awesome-alerts";
 
-const { height } = Dimensions.get("window");
+import { useAuthentication } from "../hooks";
 
 const LockScreen = () => {
   const [showAlert, setShowAlert] = useState(false);
@@ -25,6 +24,9 @@ const LockScreen = () => {
   const dispatch = useDispatch();
   const [isBiometricSupported, setIsBiometricSupported] = React.useState(false);
   const [faceIdWorking, setFaceIdWorking] = React.useState(false);
+  const [compatible, setCompatible] = useState(false);
+  const [fingerprints, setFingerprints] = useState(false);
+  const [result, setResult] = useState(false);
 
   const onComplete = (val, clear) => {
     if (!pinCodeSet) {
@@ -40,37 +42,29 @@ const LockScreen = () => {
     }
   };
 
-  const handleBiometricsStored = async () => {
-    const savedBiometrics = await LocalAuthentication.isEnrolledAsync();
-    if (!savedBiometrics)
-      return Alert.alert(
-        "Biometric record not found",
-        "Please verify your identity with your password",
-        "OK",
-        () => fallBackToDefaultAuth()
-      );
+  const handleBiometrics = async () => {
+    let compatible = await LocalAuthentication.hasHardwareAsync();
+    setCompatible(compatible);
+
+    let fingerprints = await LocalAuthentication.isEnrolledAsync();
+    setFingerprints(fingerprints);
   };
 
-  const handleBiometricAuth = async () => {
-    const { success } = await LocalAuthentication.authenticateAsync({
-      promptMessage: "Login with Biometrics",
-      disableDeviceFallback: true,
+  const handleScan = async () => {
+    let { success } = await LocalAuthentication.authenticateAsync({
+      promptMessage: "Allow Biometrics Authentication",
     });
+    setResult(success);
 
-    setFaceIdWorking(success);
+    if (success) {
+      dispatch(setAuth(true));
+      navigation.navigate("BottomTabNavigator");
+    }
   };
 
   useEffect(() => {
-    (async () => {
-      const compatible = await LocalAuthentication.hasHardwareAsync();
-      setIsBiometricSupported(compatible);
-
-      await handleBiometricsStored();
-      await handleBiometricAuth();
-    })();
+    handleBiometrics();
   }, []);
-
-  useAuthentication();
 
   return (
     <View
@@ -108,16 +102,9 @@ const LockScreen = () => {
         pinLength={4}
         inputBgColor="white"
         inputActiveBgColor="yellow"
+        allowFaceId={compatible}
+        handleScan={handleScan}
       />
-
-      <Text style={{ color: WHITE }}>
-        {" "}
-        {isBiometricSupported
-          ? "Your device is compatible with Biometrics"
-          : "Face or Fingerprint scanner is available on this device"}
-      </Text>
-
-      {faceIdWorking && <Text style={{ color: WHITE }}>Authenticated</Text>}
 
       <AwesomeAlert
         show={showAlert}

@@ -18,7 +18,6 @@ export const useAuthentication = () => {
     if (!isAuth) {
       navigation.navigate("LockScreen");
     } else {
-      console.log("else");
       navigation.navigate("BottomTabNavigator");
     }
     // eslint-disable-next-line
