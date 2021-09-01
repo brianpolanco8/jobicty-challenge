@@ -44,5 +44,6 @@ const styles = StyleSheet.create({
     color: WHITE,
     fontSize: 30,
     fontWeight: "bold",
+    padding: 10,
   },
 });

@@ -6,7 +6,6 @@ import {
   Text,
   View,
 } from "react-native";
-import { Icon } from "react-native-elements";
 import { api } from "../app/api";
 import { SearchBar, SearchResult } from "../components";
 import { useAuthentication } from "../hooks";
@@ -60,6 +59,7 @@ const styles = StyleSheet.create({
     backgroundColor: BLACK,
   },
   text: {
+    padding: 10,
     color: WHITE,
     fontSize: 30,
     fontWeight: "bold",

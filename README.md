@@ -50,6 +50,10 @@ Then depending on the OS you'll want the app to run, execute either:
   - Image ✅
   - Series they have participated in, with a link to the series details ✅
 
+# Extra features
+
+- Allow the user to change their passcode ✅
+
 # List of libraries used
 
 - **expo**: to build the project.

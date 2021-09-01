@@ -1,8 +1,7 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { EpisodeDetail, Home, ShowDetails, ShowSearch } from "../screens";
-import { BLACK, WHITE, YELLOW } from "../utils/colors";
+import { EpisodeDetail, ShowDetails, ShowSearch } from "../screens";
+import { BLACK, WHITE } from "../utils/colors";
 
 const ShowStackNavigator = () => {
   const Stack = createStackNavigator();

@@ -22,11 +22,8 @@ const LockScreen = () => {
   const navigation = useNavigation();
   const { isAuth, pinCode, pinCodeSet } = useSelector(selectState);
   const dispatch = useDispatch();
-  const [isBiometricSupported, setIsBiometricSupported] = React.useState(false);
-  const [faceIdWorking, setFaceIdWorking] = React.useState(false);
   const [compatible, setCompatible] = useState(false);
   const [fingerprints, setFingerprints] = useState(false);
-  const [result, setResult] = useState(false);
 
   const onComplete = (val, clear) => {
     if (!pinCodeSet) {
@@ -54,7 +51,6 @@ const LockScreen = () => {
     let { success } = await LocalAuthentication.authenticateAsync({
       promptMessage: "Allow Biometrics Authentication",
     });
-    setResult(success);
 
     if (success) {
       dispatch(setAuth(true));

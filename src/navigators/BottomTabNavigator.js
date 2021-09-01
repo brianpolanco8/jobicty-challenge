@@ -1,18 +1,19 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home, Search } from "../screens";
+import { Home } from "../screens";
 import AntIcon from "react-native-vector-icons/AntDesign";
-import { BLACK, DARKGREEN, YELLOW } from "../utils/colors";
+import { BLACK, YELLOW } from "../utils/colors";
 import ShowStackNavigator from "./ShowStackNavigator";
 import PeopleStackNavigator from "./PeopleStackNavigator";
 import FavoritesStackNavigator from "./FavoritesStackNavigator";
+import SettingsStackNavigator from "./SettingsStackNavigator";
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Settings"
       screenOptions={{
         tabBarActiveTintColor: YELLOW,
         tabBarStyle: {
@@ -27,7 +28,7 @@ const BottomTabNavigator = () => {
         name="Home"
         component={Home}
         options={{
-          tabBarIcon: ({ color, focused, size }) => (
+          tabBarIcon: ({ color, size }) => (
             <AntIcon name="home" color={color} size={size} />
           ),
         }}
@@ -36,7 +37,7 @@ const BottomTabNavigator = () => {
         name="Search"
         component={ShowStackNavigator}
         options={{
-          tabBarIcon: ({ color, focused, size }) => (
+          tabBarIcon: ({ color, size }) => (
             <AntIcon name="search1" color={color} size={size} />
           ),
         }}
@@ -45,7 +46,7 @@ const BottomTabNavigator = () => {
         name="People"
         component={PeopleStackNavigator}
         options={{
-          tabBarIcon: ({ color, focused, size }) => (
+          tabBarIcon: ({ color, size }) => (
             <AntIcon name="user" color={color} size={size} />
           ),
         }}
@@ -56,6 +57,15 @@ const BottomTabNavigator = () => {
         options={{
           tabBarIcon: ({ color, focused, size }) => (
             <AntIcon name="hearto" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Settings"
+        component={SettingsStackNavigator}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <AntIcon name="setting" color={color} size={size} />
           ),
         }}
       />
