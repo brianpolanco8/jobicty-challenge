@@ -20,6 +20,10 @@ Then depending on the OS you'll want the app to run, execute either:
 
 `yarn run ios` or `yarn run android`
 
+# APK Location
+
+The apk is located inside the root directory of the project in the `dist` folder
+
 # Mandatory Tasks
 
 - List all of the series contained in the API used by the paging scheme provided by the API. ✅
