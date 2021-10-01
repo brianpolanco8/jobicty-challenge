@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "postinstall": "npx patch-package" 
   },
   "dependencies": {
     "@haskkor/react-native-pincode": "^1.22.6",
@@ -21,6 +22,7 @@
     "ramda": "^0.27.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-error-boundary": "^3.1.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-awesome-alerts": "^1.5.2",
     "react-native-awesome-pin": "^1.3.2",

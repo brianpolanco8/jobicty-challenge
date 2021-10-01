@@ -7,3 +7,4 @@ export { default as PeopleSearch } from "./People/PeopleSearch";
 export { default as PeopleDetail } from "./People/PeopleDetail";
 export { default as SettingsScreen } from "./Settings/SettingsScreen";
 export { default as ChangePasscode } from "./Settings/ChangePasscode";
+export {default as ErrorScreen} from './ErrorScreen'

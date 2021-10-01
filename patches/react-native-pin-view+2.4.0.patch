@@ -1,0 +1,83 @@
+diff --git a/node_modules/react-native-pin-view/index.js b/node_modules/react-native-pin-view/index.js
+index 26e4ce5..144212f 100644
+--- a/node_modules/react-native-pin-view/index.js
++++ b/node_modules/react-native-pin-view/index.js
+@@ -105,6 +105,8 @@ class PinView extends React.Component {
+       onPress,
+       buttonDeletePosition,
+       buttonDeleteStyle,
++      allowFaceId,
++      handleScan
+     } = this.props
+     return (
+       <View pointerEvents={disabled ? "none" : undefined}>
+@@ -138,6 +140,8 @@ class PinView extends React.Component {
+             onPress={onPress}
+             buttonDeletePosition={buttonDeletePosition}
+             buttonDeleteStyle={buttonDeleteStyle}
++            allowFaceId={allowFaceId}
++            handleScan={handleScan}
+           />
+         </View>
+       </View>
+diff --git a/node_modules/react-native-pin-view/libs/parts/KeyboardView.js b/node_modules/react-native-pin-view/libs/parts/KeyboardView.js
+index 6d0b48a..ae478b6 100644
+--- a/node_modules/react-native-pin-view/libs/parts/KeyboardView.js
++++ b/node_modules/react-native-pin-view/libs/parts/KeyboardView.js
+@@ -1,9 +1,16 @@
+ import React from 'react';
+ import {Animated, FlatList, Text, TouchableOpacity, I18nManager} from "react-native";
++import AntIcon from "react-native-vector-icons/AntDesign";
++import { BLACK, WHITE } from '../../../../src/utils/colors';
+ 
+-const KeyboardView = ({ keyboardOnPress, keyboardViewStyle, keyboardViewTextStyle, pinLength, onComplete, bgColor, returnType, textColor, animatedDeleteButton, deleteText, animatedDeleteButtonOnPress, styles, onPress, buttonDeletePosition, buttonDeleteStyle }) => {
++const KeyboardView = ({ keyboardOnPress, keyboardViewStyle, keyboardViewTextStyle, pinLength, onComplete, bgColor, returnType, textColor, animatedDeleteButton, deleteText, animatedDeleteButtonOnPress, styles, onPress, buttonDeletePosition, buttonDeleteStyle, handleScan }) => {
+   let data = ["1", "2", "3", "4", "5", "6", "7", "8", "9"];
+-  const leftButtonDeletePositions = [deleteText, "0", 'empty'];
++  const leftButtonDeletePositions = [deleteText, "0", <AntIcon
++  style={{ marginHorizontal: 5 }}
++  name={"smileo"}
++  size={50}
++  color={BLACK}
++/>];
+   const rightButtonDeletePositions = ['empty', "0", deleteText];
+ 
+   const setButtonDeletePosition = (arrToConcatLeft, arrToConcatRight) => {
+@@ -37,12 +44,9 @@ const KeyboardView = ({ keyboardOnPress, keyboardViewStyle, keyboardViewTextStyl
+         opacity: animatedDeleteButton,
+       }];
+       ViewStyles = { ...ViewStyles, ...buttonDeleteStyle };
+-    } else if(item === 'empty') {
+-      onPressInactive = false;
+-      style = [styles[0], {
+-        opacity: 0,
+-      }];
+-      onPressKeyboard = () => {};
++    } else if(typeof item === 'object') {
++      // onPressKeyboard = handleScan
++      style = [styles[0]]
+     } else {
+       onPressInactive = false;
+       style = [styles[0]]
+@@ -51,7 +55,7 @@ const KeyboardView = ({ keyboardOnPress, keyboardViewStyle, keyboardViewTextStyl
+       <TouchableOpacity
+         key={"key-item-" + index}
+         activeOpacity={0.9}
+-        onPress={onPressKeyboard}
++        onPress={typeof item === "object" ? handleScan : onPressKeyboard}
+         disabled={onPressInactive}>
+         <Animated.View style={[style, {
+           backgroundColor: bgColor,
+diff --git a/node_modules/react-native-pin-view/react-native-pin-view.d.ts b/node_modules/react-native-pin-view/react-native-pin-view.d.ts
+index a396005..68d488f 100755
+--- a/node_modules/react-native-pin-view/react-native-pin-view.d.ts
++++ b/node_modules/react-native-pin-view/react-native-pin-view.d.ts
+@@ -30,6 +30,8 @@ declare module "react-native-pin-view" {
+         keyboardViewStyle?: ViewStyle
+         keyboardViewTextStyle?: TextStyle
+         keyboardContainerStyle?: ViewStyle
++        allowFaceId?: boolean
++        handleScan?: () => Promise<void>
+     }
+ 
+     const PinView: React.FunctionComponent<PinViewProps>

@@ -20,6 +20,7 @@ const Home = () => {
     fetch(api.search.shows, setShows, "girls", setIsLoading).then((result) =>
       setIsLoading(false)
     );
+    
   }, []);
 
   useAuthentication();

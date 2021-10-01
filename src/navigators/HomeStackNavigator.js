@@ -1,14 +1,17 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { EpisodeDetail, Home, LockScreen, ShowDetails } from "../screens";
+import { EpisodeDetail, ErrorScreen, Home, LockScreen, ShowDetails } from "../screens";
 import { BLACK, WHITE } from "../utils/colors";
 import BottomTabNavigator from "./BottomTabNavigator";
+import {ErrorBoundary} from 'react-error-boundary'
+
 
 const HomeStackNavigator = () => {
   const Stack = createStackNavigator();
 
   return (
+    // <ErrorBoundary FallbackComponent={ErrorScreen}>
     <Stack.Navigator
       initialRouteName="LockScreen"
       screenOptions={{ headerShown: false }}
@@ -44,6 +47,7 @@ const HomeStackNavigator = () => {
         }}
       />
     </Stack.Navigator>
+    // </ErrorBoundary>
   );
 };
 

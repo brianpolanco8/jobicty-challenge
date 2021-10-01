@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Dimensions } from "react-native";
 import {
   ActivityIndicator,
   FlatList,
@@ -6,11 +7,14 @@ import {
   Text,
   View,
 } from "react-native";
+import AntIcon from "react-native-vector-icons/AntDesign";
 import { useSelector } from "react-redux";
 import { selectState } from "../../app/store/slices/appSlice";
 import { FavoriteShowResult } from "../../components";
 import { BLACK, WHITE } from "../../utils/colors";
 import { sortFavsAlphabetically } from "../../utils/helpers";
+
+const {height} = Dimensions.get('window')
 
 const FavoritesShows = () => {
   const { favShows } = useSelector(selectState);
@@ -20,6 +24,19 @@ const FavoritesShows = () => {
     <View style={styles.container}>
       <View>
         <Text style={styles.text}>Favorites Shows</Text>
+
+        {favShows.length === 0 && (
+          <View style={styles.noFavorites}>
+          <AntIcon
+          style={{ marginHorizontal: 5 }}
+          name={"frowno"}
+          size={40}
+          color={WHITE}
+        />
+        <Text style={[styles.text, {fontSize: 23}]}>No shows in favorites yet!</Text>
+        </View>
+        )}
+
         <FlatList
           data={sortFavsAlphabetically(favShows)}
           keyExtractor={(item, i) => `${i}`}
@@ -46,4 +63,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     padding: 10,
   },
+  noFavorites: {
+    // flex:1,
+    justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: "red",
+    height: height * 0.6,
+  }
 });

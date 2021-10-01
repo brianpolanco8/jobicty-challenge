@@ -54,8 +54,6 @@ const ShowDetailsScreen = ({ route }) => {
 
   const isInFavs = includes(showDetails, favShows);
 
-  console.log("isInFav", isInFavs);
-
   useEffect(() => {
     setIsLoading(true);
     Promise.all([
@@ -102,7 +100,8 @@ const ShowDetailsScreen = ({ route }) => {
             <GenresList genres={showDetails?.genres} />
             {/* Description */}
             <Text style={styles.showSummary}>
-              {removeHTMLTags(showDetails?.summary)}
+              {removeHTMLTags(showDetails?.summary)?.length > 0 ? removeHTMLTags(showDetails?.summary)?.length > 0 : "No description information"}
+              {}
             </Text>
           </View>
         </View>
@@ -138,7 +137,7 @@ const ShowDetailsScreen = ({ route }) => {
             style={{ marginRight: 10 }}
           />
           <Text style={{ color: WHITE, fontSize: 20 }}>
-            {showDetails?.rating?.average}
+            {showDetails?.rating?.average ? showDetails?.rating?.average : "No rating information"}
           </Text>
         </View>
         {/* SEASONS */}

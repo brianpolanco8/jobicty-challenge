@@ -41,9 +41,11 @@ const LockScreen = () => {
 
   const handleBiometrics = async () => {
     let compatible = await LocalAuthentication.hasHardwareAsync();
+    console.log('compatible', compatible)
     setCompatible(compatible);
 
     let fingerprints = await LocalAuthentication.isEnrolledAsync();
+    console.log('fingerprints', fingerprints)
     setFingerprints(fingerprints);
   };
 
